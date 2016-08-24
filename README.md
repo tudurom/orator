@@ -66,6 +66,11 @@ A simple layout may look like this:
 As you can see each file can contain multiple templates. They are all loaded
 anyway.
 
+#### Assets
+
+Site's assets are stores in the `static` directory. They are automatically
+copied in the root of the generated site's folder.
+
 #### Creating content
 
 Next up, we write some content for our site in the `content` directory. The
