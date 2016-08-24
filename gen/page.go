@@ -14,7 +14,7 @@ import (
 
 // Representation of a page
 type Page struct {
-	FrontMatter map[string]string
+	FrontMatter map[string]interface{}
 	Content     template.HTML
 }
 
@@ -36,7 +36,7 @@ func (p *Page) GeneratePage(input io.Reader, fileExt string, conf *config.SiteCo
 		return "", err
 	}
 
-	p.FrontMatter = make(map[string]string)
+	p.FrontMatter = make(map[string]interface{})
 	yaml.Unmarshal([]byte(front), p.FrontMatter)
 
 	// Handle different formats
@@ -47,7 +47,7 @@ func (p *Page) GeneratePage(input io.Reader, fileExt string, conf *config.SiteCo
 	if p.FrontMatter["layout"] == "" {
 		generatedPage = body
 	} else {
-		tplName := p.FrontMatter["layout"]
+		tplName := p.FrontMatter["layout"].(string)
 		buf := new(bytes.Buffer)
 		data := PageData{p, conf, layouts[tplName]}
 		err := rootTpl.ExecuteTemplate(buf, tplName, data)

@@ -16,7 +16,7 @@ import (
 // Layout metadata
 type Layout struct {
 	Name        string
-	FrontMatter map[string]string
+	FrontMatter map[string]interface{}
 }
 
 // Load layouts from the layouts directory
@@ -41,7 +41,7 @@ func LoadLayouts(dirpath string, layouts map[string]Layout, rootTemplate *templa
 			if err != nil {
 				log.Fatal(err)
 			}
-			lfm := make(map[string]string)
+			lfm := make(map[string]interface{})
 			yaml.Unmarshal([]byte(front), &lfm)
 			_, err = rootTemplate.Parse(body)
 			if err != nil {
