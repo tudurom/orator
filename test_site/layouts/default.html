@@ -1,0 +1,22 @@
+{{ define "head" }}
+<head>
+	<meta charset="utf-8">
+	{{ $title := index .Page.FrontMatter "title" }}
+	<title>{{ .SiteConfig.Title }}{{ if $title }} - {{ $title }}{{end}}</title>
+</head>
+{{ end }}
+
+{{ define "header" }}
+<header>
+	<h1><a href="/">{{ .SiteConfig.Title }}</a></h1>
+</header>
+{{ end }}
+
+{{ define "default" }}
+<!DOCTYPE html>
+{{ template "head" . }}
+<body>
+	{{ template "header" . }}
+	{{ .Page.Content }}
+</body>
+{{ end }}
