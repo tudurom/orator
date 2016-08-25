@@ -14,7 +14,6 @@ type SiteConfig struct {
 	Description string
 	Keywords    string
 	Author      string
-	BasePath    string
 	Extra       map[string]interface{}
 }
 
