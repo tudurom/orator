@@ -16,11 +16,7 @@ import (
 func GenerateSite(contentDir, outputDir, staticDir string, fm *util.FrontMatter, layouts map[string]Layout,
 	rootTpl *template.Template, conf *config.SiteConfig) error {
 
-	err := os.RemoveAll(outputDir)
-	if err != nil {
-		return err
-	}
-	err = filepath.Walk(
+	err := filepath.Walk(
 		contentDir,
 		func(path string, info os.FileInfo, err error) error {
 			return makePage(path, info, contentDir, fm, layouts, rootTpl, conf, outputDir, err)
