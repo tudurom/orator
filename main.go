@@ -7,6 +7,8 @@ import (
 	"log"
 	"os"
 
+	yaml "gopkg.in/yaml.v2"
+
 	"github.com/tudurom/orator/config"
 	"github.com/tudurom/orator/gen"
 	"github.com/tudurom/orator/util"
@@ -33,10 +35,11 @@ func Init() {
 
 func usage() {
 	fmt.Print(
-		`Usage: orator [-h]
+		`Usage: orator [-h] [-scaffold]
 
 Options:
 	-h - print this message
+	-scaffold - scaffold a new project into the current directory
 
 Usage:
 	Invoke orator to generate the site in the gen directory int the current working directory.
@@ -45,11 +48,17 @@ Usage:
 }
 
 func main() {
-	var showUsage bool
+	var showUsage, doScaffold bool
 	flag.BoolVar(&showUsage, "h", false, "Show help")
+	flag.BoolVar(&doScaffold, "scaffold", false, "Make the required directory structure in this directory")
 	flag.Parse()
 	if showUsage {
 		usage()
+		os.Exit(0)
+	}
+
+	if doScaffold {
+		scaffold()
 		os.Exit(0)
 	}
 
@@ -63,4 +72,19 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Print("Job's done.")
+}
+
+func scaffold() {
+	conf := config.SiteConfig{}
+	f, err := os.Create(configFilePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+	out, err := yaml.Marshal(conf)
+	f.Write(out)
+	os.Mkdir(layoutDir, os.ModePerm)
+	os.Mkdir(contentDir, os.ModePerm)
+	os.Mkdir(outputDir, os.ModePerm)
+	os.Mkdir(staticDir, os.ModePerm)
 }

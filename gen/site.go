@@ -77,6 +77,8 @@ func makePage(path string, info os.FileInfo, prefix string, fm *util.FrontMatter
 }
 
 func copyToDir(sourceDir, destDir string) error {
+	os.MkdirAll(destDir, os.ModePerm)
+	os.MkdirAll(sourceDir, os.ModePerm)
 	err := filepath.Walk(
 		sourceDir,
 		func(path string, info os.FileInfo, err error) error {
