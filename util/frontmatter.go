@@ -12,6 +12,7 @@ const (
 	stateInBody        = 2
 )
 
+// Front matter reader.
 type FrontMatter struct {
 	tag string
 }

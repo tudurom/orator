@@ -44,7 +44,7 @@ func (p *Page) GeneratePage(input io.Reader, fileExt string, conf *config.SiteCo
 
 	generatedPage = ""
 	// If the layout is missing the return it as is
-	if p.FrontMatter["layout"] == "" {
+	if p.FrontMatter["layout"] == nil {
 		generatedPage = body
 	} else {
 		tplName := p.FrontMatter["layout"].(string)

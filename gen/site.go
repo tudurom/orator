@@ -66,7 +66,7 @@ func makePage(path string, info os.FileInfo, prefix string, fm *util.FrontMatter
 		pagePath := strings.TrimSuffix(noPrefix, filepath.Ext(noPrefix)) + ".html"
 		ioutil.WriteFile(filepath.Join(outputDir, pagePath), []byte(generatedPage), os.ModePerm)
 
-		log.Printf("Generated page '%s'", info.Name())
+		log.Printf("Generated page '%s'", noPrefix)
 	}
 
 	return nil
