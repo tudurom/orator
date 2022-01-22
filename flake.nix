@@ -9,8 +9,15 @@
   outputs = inputs@{ self, nixpkgs, utils, ... }:
   utils.lib.eachDefaultSystem (system:
     let pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      defaultPackage = import ./default.nix { inherit pkgs; };
+    in rec {
+      packages = utils.lib.flattenTree {
+        orator = import ./default.nix { inherit pkgs; };
+      };
+      defaultPackage = packages.orator;
+
+      apps.orator = utils.lib.mkApp { drv = packages.orator; };
+      defaultApp = apps.orator;
+
       devShell = import ./shell.nix { inherit pkgs; };
     }
   );
